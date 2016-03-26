@@ -1,0 +1,37 @@
+<html>
+   <body>
+     <div id="message"></div>
+      <script src="http://cdn.pubnub.com/pubnub-3.14.4.min.js"></script>
+      <script>
+      var counter = {};
+      var pubnub = PUBNUB({
+          subscribe_key : 'sub-c-a67bd9d6-f195-11e5-8cfb-0619f8945a4f'
+      })
+
+      pubnub.subscribe({
+          channel : "storm",
+          message : function (message, envelope, channelOrGroup, time, channel) {
+
+              if (typeof(counter[message]) == "undefined") {
+                counter[message] = 1;
+              } else {
+                counter[message] += 1;
+              }
+              var sortable = [];
+              for (var hashtag in counter)
+                sortable.push([hashtag, counter[hashtag]])
+              sortable.sort(function(a, b) {return b[1] - a[1]})
+              var table = "<table><thead><th>Hashtah</th><th>Numbers</th></thead>";
+              sortable.forEach(function(row) {
+                table += "<tr><td>" + row[0] + "</td><td>" + row[1] + "</td></tr>";
+              });
+              table += "</table>";
+              document.getElementById('message').innerHTML = table;
+            },
+          connect: function() {
+            console.log("Subscribing..");
+          }
+      })
+      </script>
+   </body>
+</html>
