@@ -21,7 +21,7 @@
               for (var hashtag in counter)
                 sortable.push([hashtag, counter[hashtag]])
               sortable.sort(function(a, b) {return b[1] - a[1]})
-              var table = "<table><thead><th>Hashtah</th><th>Numbers</th></thead>";
+              var table = "<table><thead><th>Hashtag</th><th>Numbers</th></thead>";
               sortable.forEach(function(row) {
                 table += "<tr><td>" + row[0] + "</td><td>" + row[1] + "</td></tr>";
               });
